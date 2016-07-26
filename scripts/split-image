@@ -1,7 +1,12 @@
 #!/usr/bin/env php
 <?php
 
-{ require getcwd().'/autoload.php'; }
+$nativeLoader = getcwd().'/autoload.php';
+if (file_exists($nativeLoader)) {
+   { require $nativeLoader; }
+} else {
+    { require getcwd() . '/vendor/autoload.php'; }
+}
 
 use DrezynSoft\SplitImage\ConsoleConfig;
 use DrezynSoft\SplitImage\DefaultConfig;
