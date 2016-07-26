@@ -1,0 +1,15 @@
+<?php
+
+return array(
+    'default-file' => 'data/to_convert/DrezynSoft.png',
+    'default-dir' => 'data/converted/',
+    'width' => 2200,
+    'height' => 3300,
+    'left-right-margin' => 500,
+    'top-bottom-margin' => 500,
+    'sep' => '_',
+    'prefix' => '',
+    'suffix' => '',
+    'RAM-factor' => 3.0,
+    'compression' => 0,
+);

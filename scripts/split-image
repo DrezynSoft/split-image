@@ -1,0 +1,88 @@
+#!/usr/bin/env php
+<?php
+
+{ require getcwd().'/autoload.php'; }
+
+use DrezynSoft\SplitImage\ConsoleConfig;
+use DrezynSoft\SplitImage\DefaultConfig;
+use DrezynSoft\SplitImage\ConsoleOptionValidator;
+use DrezynSoft\SplitImage\ConsoleOptionValidatorData;
+use DrezynSoft\SplitImage\ConsoleOption;
+use DrezynSoft\SplitImage\ConsoleOptionException;
+use DrezynSoft\SplitImage\ConsoleOutput;
+use DrezynSoft\SplitImage\ConsoleSplitImage;
+use DrezynSoft\SplitImage\SplitImageException;
+
+$console = ConsoleOutput::instance();
+$console->writeln('');
+$console->writeln(ConsoleOutput::START);
+$console->writeln('');
+
+if ((isset($argv[1]) && $argv[1] != 'help')) {
+    try {
+        $config = new ConsoleConfig(
+            new ConsoleOption(
+                $argv,
+                new ConsoleOptionValidator(ConsoleOptionValidatorData::get())
+            ),
+            new DefaultConfig()
+        );
+        $splitImage = new ConsoleSplitImage($config->get(), $console);
+        $splitImage->split();
+    } catch (ConsoleOptionException $ex) {
+        $console->error($ex->getMessage());
+    } catch (SplitImageException $ex) {
+        $console->error($ex->getMessage());
+    }
+} else {
+    $text = <<<'EOT'
+Use first param as action [help] to see this section or action [split] to split image to pieces.
+
+[split] param. (use: $ split-image split file.png dir/ --param1 val1 --param2 val2...)
+
+Params obliged:
+After split command: source-file
+Path to PNG file to split.
+
+After source-file: destination-dir (second after split command)
+Path to directory where split files will be saved.
+
+Note: minimal command is as follows (warning: last slash is required):
+$ split-image split path/to/png/file.png path/to/save-dir/
+
+List of other available params:
+
+--width default: 2200 (int)
+Destination width [px] of the every split image.
+
+--height default: 3300 (int)
+Destination height [px] of the every split image.
+
+--left-right-margin default: 500 (int)
+Margin of the previous (if any) split image. It is the simply floating coat of the previous split image (in width) [px].
+
+--top-bottom-margin default: 500 (int)
+Margin of the previous (if any) split image. It is the simply floating coat of the previous split image (in height) [px].
+
+--sep default: '_' (string)
+Text between digits of rows count and cols count.
+
+--prefix default: '' (string)
+Text before digits of rows and cols.
+
+--suffix default: '' (string)
+Text after digits of rows and cols.
+
+--RAM-factor: default: 3.0 (float)
+Multiplier for calculating predicted RAM usage.
+
+--compression: default: 0 max: 9 (int)
+Compression of PNG file 0-9.
+
+Note: All params starting with -- are optional and could be given in any order.
+EOT;
+    $texts = explode("\n", $text);
+    foreach ($texts as $t) {
+        $console->writeln($t);
+    }
+}

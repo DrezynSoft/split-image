@@ -1,0 +1,31 @@
+{
+    "name": "drezynsoft/split-image",
+    "type": "library",
+    "description": "Split PNG images into pieces.",
+    "keywords": [
+        "split",
+        "image",
+        "PNG file"
+    ],
+    "homepage": "http://drezynsoft.fotokrajobrazy.warmia.pl",
+    "license": "Custom",
+    "authors": [
+        {
+            "name": "DrezynSoft",
+            "email": "dj_drezyna@wp.pl",
+            "homepage": "http://drezynsoft.fotokrajobrazy.warmia.pl"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "ext-gd": ">=2.1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "DrezynSoft\\SplitImage\\": "src/"
+        }
+    },
+    "bin": [
+        "scripts/split-image"
+    ]
+}
